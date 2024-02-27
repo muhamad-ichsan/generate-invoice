@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Invoice</h2>
+
+<p><strong>ID Transaksi :</strong> <span th:text="${transactionDto.id}"></span></p>
+<p><strong>Tanggal Transaksi :</strong> <span th:text="${transactionDto.date}"></span></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center;">No</th>
+      <th style="text-align: center;">Nama Produk</th>
+      <th style="text-align: center;">Harga Satuan</th>
+      <th style="text-align: center;">Qty</th>
+      <th style="text-align: center;">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="item, itemStat : ${transactionDto.detail}">
+      <td style="text-align: center;" th:text="${itemStat.index + 1}"></td>
+      <td style="text-align: left;" th:text="${item.product.name}"></td>
+      <td style="text-align: right;" th:text="${item.product.price}"></td>
+      <td style="text-align: center;" th:text="${item.qty}"></td>
+      <td style="text-align: right;" th:text="${item.product.price * item.qty}"></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4" style="text-align: center;"><strong>Grand Total</strong></td>
+      <td style="text-align: right;" th:text="${transactionDto.amount}"></td>
+    </tr>
+  </tfoot>
+</table>
+
+</body>
+</html>
